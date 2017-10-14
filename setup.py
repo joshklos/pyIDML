@@ -7,5 +7,8 @@ setup(name='pyidml',
       author='Josh Klos',
       license='MIT',
       packages=['pyidml'],
+      install_requires = [
+          'lxml',
+      ],
       zip_safe=False
 )
