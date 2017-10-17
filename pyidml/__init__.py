@@ -1,2 +1,1 @@
-def generator():
-    print("Create New Document")
+from .base import pyICML, pyIDML
