@@ -14,4 +14,3 @@ class Character(object):
         self.paraStyle = para_style
         self.id = id
         self.parentParagraph = parent
-        
