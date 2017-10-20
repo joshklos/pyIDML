@@ -1,5 +1,5 @@
 import os as os
-
+from pyidml.Text.Story import Story
 
 class pyIDML(object):
     # This class is used to hold and process IDML
@@ -20,16 +20,24 @@ class pyIDML(object):
 
 
 class pyICML(object):
-    # This class is used to hold and process ICML
+    """This is the base class used to hold and process ICML"""
     def __init__(self, file_or_string=False):
-        # fileOrString, upon creation can parse a file or string of ICML
+        """Creation of ICML object
+
+        file_or_string can receive a file, a string, or nothing
+        If nothing, creates an empty shell
+        If it receives an ICML string it will attempt to parse the ICML string
+        If it receive a file, it will attempt to parse the file"""
+        self.paragraphStyles = []
+        self.characterStyles = []
+        self.story = Story()
         if file_or_string:
             if os.path.isfile(file_or_string):
                 self.fileName = file_or_string
                 self.parse_file()
             else:
                 self.fileName = None
-                self.parse_string(file_or_string)
+                self.story.parse_story(file_or_string)
         else:
             self.fileName = None
 
@@ -37,10 +45,5 @@ class pyICML(object):
         print("Parsing " + self.fileName)
         with open(self.fileName, "rt") as icmlFile:
             raw_icml = icmlFile.read()
-        self.parse_string(raw_icml)
+        self.story.parse_story(raw_icml)
         pass
-
-    def parse_string(self, raw_icml):
-        print("Parsing " + raw_icml)
-        pass
-

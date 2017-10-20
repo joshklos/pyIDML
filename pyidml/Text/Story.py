@@ -1,3 +1,9 @@
+from .Characters import Character
+from .Paragraphs import Paragraph
+
+from lxml import etree
+
+
 class Story(object):
     """Class to contain the base story object for icml
 
@@ -29,3 +35,30 @@ class Story(object):
         self.paragraphs = []
         if is_idml:
             self.parent = is_idml
+
+    def add_paragraph(self, style="[Basic Paragraph]"):
+        """Creates a new paragraph in the story"""
+        para = Paragraph(len(self.paragraphs), style, self)
+        self.paragraphs.append(para)
+
+    def add_character(self, content, para, style="[None]"):
+        """Adds character to story and paragraph"""
+        char = Character(content, style, len(self.characters), para, self)
+        para.characters.append(char)
+        self.characters.append(char)
+
+    def add_style_range(self, contents, para, style="[None]"):
+        """Add a whole string that has the same character style (only for one paragraph at a time though)"""
+        for char in contents:
+            self.add_character(char, para, style)
+
+    def generate_contents(self):
+        contents_string = ""
+        for char in self.characters:
+            contents_string += char
+        return contents_string
+
+    def parse_story(self, raw_icml):
+        root = etree.fromstring(raw_icml)
+        story = root.xpath("//story()")
+        print("Parsing...")

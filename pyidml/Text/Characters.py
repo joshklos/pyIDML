@@ -8,10 +8,10 @@ class Character(object):
         index: An index number indicating the position of the character in a story
         parent: The parent paragraph object
     """
-    def __init__(self, content, char_style, para_style, index, parent_para, parent_story):
+    def __init__(self, content, char_style, index, parent_para, parent_story):
         self.content = content
         self.appliedCharacterStyle = char_style
-        self.appliedParagraphStyle = para_style
+        self.appliedParagraphStyle = parent_para.appliedParagraphStyle
         self.index = index
         self.kerningValue = 0
         self.parentParagraph = parent_para
