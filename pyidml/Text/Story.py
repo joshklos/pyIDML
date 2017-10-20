@@ -58,7 +58,8 @@ class Story(object):
             contents_string += char
         return contents_string
 
-    def parse_story(self, raw_icml):
-        root = etree.fromstring(raw_icml)
-        story = root.xpath("//story()")
+    def parse_story(self, icml):
+        icml_root = icml.getroot()
+        for tag in icml_root:
+            print(tag.tag)
         print("Parsing...")
