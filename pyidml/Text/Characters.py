@@ -5,12 +5,14 @@ class Character(object):
         content: The actual character itself
         char_style: The applied character style for this character (takes a string)
         para_style: The applied paragraph style for this character's parent paragraph (takes a string)
-        id: An id number indicating the position of the character in a story
+        index: An index number indicating the position of the character in a story
         parent: The parent paragraph object
     """
-    def __init__(self, content, char_style, para_style, id, parent):
+    def __init__(self, content, char_style, para_style, index, parent_para, parent_story):
         self.content = content
-        self.charStyle = char_style
-        self.paraStyle = para_style
-        self.id = id
-        self.parentParagraph = parent
+        self.appliedCharacterStyle = char_style
+        self.appliedParagraphStyle = para_style
+        self.index = index
+        self.kerningValue = 0
+        self.parentParagraph = parent_para
+        self.parentStory = parent_story
