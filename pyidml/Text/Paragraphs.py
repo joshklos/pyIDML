@@ -8,7 +8,18 @@ class Paragraph(object):
     def __init__(self, index, para_style, parent_story):
         self.index = index
         self.appliedParagraphStyle = para_style
+        self.characters = []
         self.contents = ""
         self.footnotes = []
         self.parentStory = parent_story
         self.textStyleRanges = []
+
+    def print_contents(self, with_style_prefixes=False):
+        output = ""
+        if with_style_prefixes:
+            output += "<"
+            output += self.appliedParagraphStyle
+            output += ">"
+        for char in self.characters:
+            output += char.content
+        print(output)

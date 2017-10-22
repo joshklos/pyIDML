@@ -1,5 +1,6 @@
 from .Characters import Character
 from .Paragraphs import Paragraph
+from pyidml.helpers.parsers import get_style
 
 from lxml import etree
 
@@ -40,6 +41,7 @@ class Story(object):
         """Creates a new paragraph in the story"""
         para = Paragraph(len(self.paragraphs), style, self)
         self.paragraphs.append(para)
+        return para
 
     def add_character(self, content, para, style="[None]"):
         """Adds character to story and paragraph"""
@@ -59,7 +61,29 @@ class Story(object):
         return contents_string
 
     def parse_story(self, icml):
+        """Parses a string of ICML and sorts it into the class"""
         icml_root = icml.getroot()
         for tag in icml_root:
-            print(tag.tag)
-        print("Parsing...")
+            if tag.tag == "Story":
+                for para in tag:
+                    # same_style_para is used to determine if we need to create a new para after a Br tag
+                    same_style_para = False
+                    if para.tag != "ParagraphStyleRange":
+                        print("Expected a ParagraphStyleRangeTag received a " + para.tag + " instead.")
+                    para_style = get_style(para.get("AppliedParagraphStyle"))
+                    new_para = self.add_paragraph(para_style)
+                    for style_range in para:
+                        char_style = get_style(style_range.get("AppliedCharacterStyle"))
+                        if same_style_para:
+                            same_style_para = False
+                            new_para = self.add_paragraph(para_style)
+                        for content in style_range:
+                            if content.tag == "Br":
+                                same_style_para = True
+                                continue
+                            if content.text is not None:
+                                self.add_style_range(content.text, new_para, char_style)
+
+    def print_contents(self, with_style_prefixes=False):
+        for para in self.paragraphs:
+            para.print_contents(with_style_prefixes)
