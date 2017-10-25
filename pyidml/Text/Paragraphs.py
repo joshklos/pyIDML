@@ -1,3 +1,5 @@
+from .Styles import TextStyleRange
+
 class Paragraph(object):
     """Paragraph class
 
@@ -29,3 +31,17 @@ class Paragraph(object):
         self.content = ""
         for char in self.characters:
             self.content += char.content
+
+    def generate_text_style_ranges(self):
+        new_range = TextStyleRange()
+        new_range.appliedCharacterStyle = self.characters[0].appliedCharacterStyle
+        for char in self.characters:
+            if char.appliedCharacterStyle == new_range.appliedCharacterStyle:
+                new_range.characters.append(char)
+            else:
+                new_range.generate_contents()
+                self.textStyleRanges.append(new_range)
+                new_range = TextStyleRange()
+                new_range.appliedCharacterStyle = char.appliedCharacterStyle
+        new_range.generate_contents()
+        self.textStyleRanges.append(new_range)
