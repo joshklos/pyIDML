@@ -23,3 +23,8 @@ class Paragraph(object):
         for char in self.characters:
             output += char.content
         print(output)
+
+    def generate_contents(self):
+        self.content = ""
+        for char in self.characters:
+            self.content += char.content
