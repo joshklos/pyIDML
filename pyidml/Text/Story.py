@@ -88,6 +88,8 @@ class Story(object):
                                 continue
                             if content.text is not None:
                                 self.add_style_range(content.text, new_para, char_style)
+        for para in self.paragraphs:
+            para.update()
 
     def print_contents(self, with_style_prefixes=False):
         for para in self.paragraphs:

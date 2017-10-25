@@ -45,3 +45,8 @@ class Paragraph(object):
                 new_range.appliedCharacterStyle = char.appliedCharacterStyle
         new_range.generate_contents()
         self.textStyleRanges.append(new_range)
+
+    def update(self):
+        self.generate_contents()
+        self.textStyleRanges = []
+        self.generate_text_style_ranges()
