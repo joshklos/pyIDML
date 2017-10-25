@@ -39,3 +39,15 @@ class TextStyles(object):
             for style_name in self.styles:
                 if self.styles[style_name].id == by_id:
                     return self.styles[style_name]
+
+
+class TextStyleRange(object):
+    def __init__(self):
+        self.characters = []
+        self.content = ""
+        self.appliedCharacterStyle = None
+
+    def generate_contents(self):
+        self.content = ""
+        for char in self.characters:
+            self.content += char.content

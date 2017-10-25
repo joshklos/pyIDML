@@ -9,7 +9,7 @@ class Paragraph(object):
         self.index = index
         self.appliedParagraphStyle = para_style
         self.characters = []
-        self.contents = ""
+        self.content = ""
         self.footnotes = []
         self.parentStory = parent_story
         self.textStyleRanges = []
