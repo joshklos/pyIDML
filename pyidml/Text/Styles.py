@@ -39,6 +39,12 @@ class TextStyles(object):
             for style_name in self.styles:
                 if self.styles[style_name].id == by_id:
                     return self.styles[style_name]
+        return None
+
+    def add_or_retrieve_style(self, name):
+        if self.get_style(by_name=name) is not None:
+            return self.get_style(by_name=name)
+        return self.new_style(name)
 
 
 class TextStyleRange(object):
