@@ -1,7 +1,9 @@
 from .Characters import Character
 from .Paragraphs import Paragraph
+from .Styles import TextStyles
 from pyidml.helpers.parsers import get_style
 
+import os
 from lxml import etree
 
 
@@ -34,6 +36,9 @@ class Story(object):
         self.name = None
         self.notes = []
         self.paragraphs = []
+        self.paragraphStyles = TextStyles("Paragraph", "paragraph")
+        self.characterStyles = TextStyles("Character", "character")
+        self.filename = None
         if is_idml:
             self.parent = is_idml
 
@@ -87,3 +92,20 @@ class Story(object):
     def print_contents(self, with_style_prefixes=False):
         for para in self.paragraphs:
             para.print_contents(with_style_prefixes)
+
+
+class Stories(list):
+    def __init__(self):
+        super().__init__()
+
+    def new_story(self, file_or_string=None):
+        new_story = Story()
+        if file_or_string:
+            if os.path.isfile(file_or_string):
+                new_story.fileName = file_or_string
+                parsed = etree.parse(file_or_string)
+            else:
+                new_story.fileName = None
+                parsed = etree.fromstring(file_or_string)
+            new_story.parse_story(parsed)
+        self.append(new_story)

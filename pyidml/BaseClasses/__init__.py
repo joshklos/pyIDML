@@ -1,6 +1,7 @@
 import os as os
-from pyidml.Text.Story import Story
+from pyidml.Text.Story import Stories
 from lxml import etree
+
 
 class pyIDML(object):
     # This class is used to hold and process IDML
@@ -31,20 +32,6 @@ class pyICML(object):
         If it receive a file, it will attempt to parse the file"""
         self.paragraphStyles = []
         self.characterStyles = []
-        self.story = Story()
+        self.stories = Stories()
         if file_or_string:
-            if os.path.isfile(file_or_string):
-                self.fileName = file_or_string
-                self.parse_file()
-            else:
-                self.fileName = None
-                parsed = etree.fromstring(file_or_string)
-                self.story.parse_story(parsed)
-        else:
-            self.fileName = None
-
-    def parse_file(self):
-        print("Parsing " + self.fileName)
-        parsed = etree.parse(self.fileName)
-        self.story.parse_story(parsed)
-        pass
+            self.stories.new_story(file_or_string)
