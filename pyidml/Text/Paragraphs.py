@@ -16,12 +16,13 @@ class Paragraph(object):
 
     def print_contents(self, with_style_prefixes=False):
         output = ""
+        if self.content == "":
+            self.generate_contents()
         if with_style_prefixes:
             output += "<"
             output += self.appliedParagraphStyle
             output += ">"
-        for char in self.characters:
-            output += char.content
+        output += self.content
         print(output)
 
     def generate_contents(self):
