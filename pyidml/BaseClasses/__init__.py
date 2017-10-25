@@ -1,5 +1,6 @@
 import os as os
 from pyidml.Text.Story import Stories
+from pyidml.Text.Styles import TextStyles
 from lxml import etree
 
 
@@ -30,8 +31,8 @@ class pyICML(object):
         If nothing, creates an empty shell
         If it receives an ICML string it will attempt to parse the ICML string
         If it receive a file, it will attempt to parse the file"""
-        self.paragraphStyles = []
-        self.characterStyles = []
+        self.paragraphStyles = TextStyles("Paragraph", "paragraph")
+        self.characterStyles = TextStyles("Character", "character")
         self.stories = Stories()
         if file_or_string:
             self.stories.new_story(file_or_string)

@@ -76,18 +76,24 @@ class Story(object):
                     if para.tag != "ParagraphStyleRange":
                         print("Expected a ParagraphStyleRangeTag received a " + para.tag + " instead.")
                     para_style = get_style(para.get("AppliedParagraphStyle"))
-                    new_para = self.add_paragraph(para_style)
+                    appliedParaStyle = self.paragraphStyles.add_or_retrieve_style(para_style)
+                    new_para = self.add_paragraph(appliedParaStyle)
                     for style_range in para:
                         char_style = get_style(style_range.get("AppliedCharacterStyle"))
+                        appliedCharStyle = self.characterStyles.add_or_retrieve_style(char_style)
                         if same_style_para:
                             same_style_para = False
-                            new_para = self.add_paragraph(para_style)
+                            new_para = self.add_paragraph(appliedParaStyle)
                         for content in style_range:
                             if content.tag == "Br":
                                 same_style_para = True
                                 continue
                             if content.text is not None:
-                                self.add_style_range(content.text, new_para, char_style)
+                                self.add_style_range(content.text, new_para, appliedCharStyle)
+        for para in self.paragraphs:
+            para.update()
+
+    def update(self):
         for para in self.paragraphs:
             para.update()
 

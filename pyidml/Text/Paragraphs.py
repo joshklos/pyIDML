@@ -1,5 +1,6 @@
 from .Styles import TextStyleRange
 
+
 class Paragraph(object):
     """Paragraph class
 
@@ -22,7 +23,7 @@ class Paragraph(object):
             self.generate_contents()
         if with_style_prefixes:
             output += "<"
-            output += self.appliedParagraphStyle
+            output += self.appliedParagraphStyle.name
             output += ">"
         output += self.content
         print(output)
