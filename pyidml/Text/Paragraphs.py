@@ -1,7 +1,8 @@
 from .Styles import TextStyleRange
+from .BaseText import CommonText
 
 
-class Paragraph(object):
+class Paragraph(CommonText):
     """Paragraph class
 
         Takes three arguments upon creation:
@@ -9,6 +10,7 @@ class Paragraph(object):
             para_style: the name of the paragraph style that applies to this paragraph
             parent_story: the parent story that this paragraph is a part of"""
     def __init__(self, index, para_style, parent_story):
+        super().__init__()
         self.index = index
         self.appliedParagraphStyle = para_style
         self.characters = []
