@@ -4,3 +4,4 @@ class CommonText(object):
         self.appliedConditions = None
         self.appliedLanguage = None
         self.appliedParagraphStyle = None
+        self.autoLeading = None

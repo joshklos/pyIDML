@@ -1,4 +1,6 @@
-class Character(object):
+from .BaseText import CommonText
+
+class Character(CommonText):
     """Class to contain the basic building block of a story, individual characters
 
         Upon creation takes 5 arguments:
@@ -9,6 +11,7 @@ class Character(object):
         parent: The parent paragraph object
     """
     def __init__(self, content, char_style, index, parent_para, parent_story):
+        super().__init__()
         self.content = content
         self.appliedCharacterStyle = char_style
         self.appliedParagraphStyle = parent_para.appliedParagraphStyle
