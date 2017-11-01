@@ -1,6 +1,7 @@
 import unittest
-import resources
+from .dummy_icml import contents as icml_contents
 from pyidml import pyIDML
+
 
 class TestPyIDML(unittest.TestCase):
     def setUp(self):
@@ -18,5 +19,5 @@ class TestPyIDML(unittest.TestCase):
         self.assertEqual(testIdml._inputType, "ICML")
 
     def test_string_pass(self):
-        testIdml = pyIDML(resources.contents)
+        testIdml = pyIDML(icml_contents)
         self.assertEqual(testIdml._inputType, "STRING")
