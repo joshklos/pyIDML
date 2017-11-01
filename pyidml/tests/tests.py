@@ -21,4 +21,3 @@ class TestPyIDML(unittest.TestCase):
     def test_string_pass(self):
         test_idml = pyIDML(icml_contents)
         self.assertEqual(test_idml._inputType, "STRING")
-        

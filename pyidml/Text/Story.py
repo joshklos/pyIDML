@@ -25,11 +25,11 @@ class Story(object):
                     document and passed it in). Added if an IDML document object is passed in
             words: Not actually implemented
 
-        While this code is meant to mimix the InDesign JS object model, it does not contain all of the same features.
+        While this code is meant to mimic the InDesign JS object model, it does not contain all of the same features.
         I've left out many properties that exist for the story as they should be implemented as paragraph and character
-        styles and not set as properties of a story"""
-    def __init__(self, is_idml=False):
-        self.id = 0
+        styles and not set as properties of a story, using this code means that you'll have to follow best practices"""
+    def __init__(self, idml_parent):
+        self.id = None
         self.characters = []
         self.contents = None
         self.footnotes = []
@@ -37,11 +37,14 @@ class Story(object):
         self.name = None
         self.notes = []
         self.paragraphs = []
-        self.paragraphStyles = TextStyles("Paragraph", "paragraph")
-        self.characterStyles = TextStyles("Character", "character")
         self.filename = None
-        if is_idml:
-            self.parent = is_idml
+        self.parent = idml_parent
+
+        self.self = None
+        self.appliedNamedGrid = None
+        self.appliedTOCStyle = None
+        self.storyTitle = None
+        self.trackChanges = None
 
     def add_paragraph(self, style="[Basic Paragraph]"):
         """Creates a new paragraph in the story"""
@@ -77,11 +80,11 @@ class Story(object):
                         print("Expected a ParagraphStyleRangeTag received a " + para.tag + " instead.")
                         continue
                     para_style = get_style(para.get("AppliedParagraphStyle"))
-                    appliedParaStyle = self.paragraphStyles.add_or_retrieve_style(para_style)
+                    appliedParaStyle = self.parent.paragraphStyles.add_or_retrieve_style(para_style)
                     new_para = self.add_paragraph(appliedParaStyle)
                     for style_range in para:
                         char_style = get_style(style_range.get("AppliedCharacterStyle"))
-                        appliedCharStyle = self.characterStyles.add_or_retrieve_style(char_style)
+                        appliedCharStyle = self.parent.characterStyles.add_or_retrieve_style(char_style)
                         if same_style_para:
                             same_style_para = False
                             new_para = self.add_paragraph(appliedParaStyle)

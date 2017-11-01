@@ -7,7 +7,7 @@ from lxml import etree
 class pyIDML(object):
     # This class is used to hold and process IDML
     def __init__(self, file_or_string=False):
-        self.domVersion = "7.0"
+        self.domVersion = "8.0"
         self.self = None
         self.accurateLABSpots = None
         self.activeLayer = None
