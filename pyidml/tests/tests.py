@@ -11,13 +11,14 @@ class TestPyIDML(unittest.TestCase):
         pass
 
     def test_idml_extension(self):
-        testIdml = pyIDML("Orthodoxy.idml")
-        self.assertEqual(testIdml._inputType, "IDML")
+        test_idml = pyIDML("Orthodoxy.idml")
+        self.assertEqual(test_idml._inputType, "IDML")
 
     def test_icml_extension(self):
-        testIdml = pyIDML("Chapter 1.icMl")
-        self.assertEqual(testIdml._inputType, "ICML")
+        test_idml = pyIDML("Chapter 1.icMl")
+        self.assertEqual(test_idml._inputType, "ICML")
 
     def test_string_pass(self):
-        testIdml = pyIDML(icml_contents)
-        self.assertEqual(testIdml._inputType, "STRING")
+        test_idml = pyIDML(icml_contents)
+        self.assertEqual(test_idml._inputType, "STRING")
+        
