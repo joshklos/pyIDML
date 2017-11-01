@@ -4,6 +4,7 @@ from .Styles import TextStyles
 from pyidml.helpers.parsers import get_style
 
 import os
+import re
 from lxml import etree
 
 
@@ -67,14 +68,14 @@ class Story(object):
 
     def parse_story(self, icml):
         """Parses a string of ICML and sorts it into the class"""
-        icml_root = icml.getroot()
-        for tag in icml_root:
+        for tag in icml:
             if tag.tag == "Story":
                 for para in tag:
                     # same_style_para is used to determine if we need to create a new para after a Br tag
                     same_style_para = False
                     if para.tag != "ParagraphStyleRange":
                         print("Expected a ParagraphStyleRangeTag received a " + para.tag + " instead.")
+                        continue
                     para_style = get_style(para.get("AppliedParagraphStyle"))
                     appliedParaStyle = self.paragraphStyles.add_or_retrieve_style(para_style)
                     new_para = self.add_paragraph(appliedParaStyle)
@@ -87,6 +88,8 @@ class Story(object):
                         for content in style_range:
                             if content.tag == "Br":
                                 same_style_para = True
+                                continue
+                            if content.tag != "Content":
                                 continue
                             if content.text is not None:
                                 self.add_style_range(content.text, new_para, appliedCharStyle)
@@ -112,8 +115,16 @@ class Stories(list):
             if os.path.isfile(file_or_string):
                 new_story.fileName = file_or_string
                 parsed = etree.parse(file_or_string)
+                new_story.parse_story(parsed.getroot())
             else:
                 new_story.fileName = None
+                # Be defensive about strings, so they don't mess up lxml (which should already have fixed this, imho)
+                if isinstance(file_or_string, bytes):
+                    if file_or_string.startswith(b'<?'):
+                        file_or_string = re.sub(b'^\<\?.*?\?\>', b'', file_or_string, flags=re.DOTALL)
+                else:
+                    if file_or_string.startswith('<?'):
+                        file_or_string = re.sub(r'^\<\?.*?\?\>', '', file_or_string, flags=re.DOTALL)
                 parsed = etree.fromstring(file_or_string)
-            new_story.parse_story(parsed)
+                new_story.parse_story(parsed)
         self.append(new_story)
