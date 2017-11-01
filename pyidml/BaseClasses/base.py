@@ -53,19 +53,3 @@ class pyIDML(object):
     def parse(self):
         print("Parsing " + self.filePath)
         pass
-
-
-class pyICML(object):
-    """This is the base class used to hold and process ICML"""
-    def __init__(self, file_or_string=False):
-        """Creation of ICML object
-
-        file_or_string can receive a file, a string, or nothing
-        If nothing, creates an empty shell
-        If it receives an ICML string it will attempt to parse the ICML string
-        If it receive a file, it will attempt to parse the file"""
-        self.paragraphStyles = TextStyles("Paragraph", "paragraph")
-        self.characterStyles = TextStyles("Character", "character")
-        self.stories = Stories()
-        if file_or_string:
-            self.stories.new_story(file_or_string)
