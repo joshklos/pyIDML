@@ -80,3 +80,150 @@ class CommonText(object):
         self.numberingExpression = None
         self.numberingLevel = None
         self.numberingStartAt = None
+        self.otfContextualAlternative = None
+        self.otfDiscretionaryLigature = None
+        self.otfFigureStyle = None
+        self.otfFraction = None
+        self.otfHVKana = None
+        self.otfHistorical = None
+        self.otfJustificationAlternate = None
+        self.otfLocale = None
+        self.otfMark = None
+        self.otfOrdinal = None
+        self.otfOverlapSwash = None
+        self.otfProportionalMetrics = None
+        self.otfRomanItalics = None
+        self.otfSlashedZero = None
+        self.otfStretchedAlternate = None
+        self.otfStylisticAlternate = None
+        self.otfStylisticSets = None
+        self.otfSwash = None
+        self.otfTitling = None
+        self.overprintFill = None
+        self.overprintStroke = None
+        self.pageNumberType = None
+        self.paragraphDirection = None
+        self.paragraphJustification = None
+        self.pointSize = None
+        self.position = None
+        self.positionalForm = None
+        self.rensuuji = None
+        self.rightIndent = None
+        self.rotateSingleByteCharacters = None
+        self.ruleAbove = None
+        self.ruleAboveGapOverprint = None
+        self.ruleAboveGapTint = None
+        self.ruleAboveLeftIndent = None
+        self.ruleAboveLineWeight = None
+        self.ruleAboveOffset = None
+        self.ruleAboveOverprint = None
+        self.ruleAboveRightIndent = None
+        self.ruleAboveTint = None
+        self.ruleAboveWidth = None
+        self.ruleBelow = None
+        self.ruleBelowGapOverprint = None
+        self.ruleBelowGapTint = None
+        self.ruleBelowLeftIndent = None
+        self.ruleBelowLineWeight = None
+        self.ruleBelowOffset = None
+        self.ruleBelowOverprint = None
+        self.ruleBelowRightIndent = None
+        self.ruleBelowTint = None
+        self.ruleBelowWidth = None
+        self.scaleAffectsLineHeight = None
+        self.singleWordJustification = None
+        self.skew = None
+        self.spaceAfter = None
+        self.spaceBefore = None
+        self.spanColumnInsideGutter = None
+        self.spanColumnOutsideGutter = None
+        self.spanColumnType = None
+        self.spanSplitColumnCount = None
+        self.startParagraph = None
+        self.strikeThroughGapOverprint = None
+        self.strikeThroughGapTint = None
+        self.strikeThroughOffset = None
+        self.strikeThroughOverprint = None
+        self.strikeThroughTint = None
+        self.strikeThroughWeight = None
+        self.strikeThru = None
+        self.strokeAlignment = None
+        self.strokeColor = None
+        self.strokeTint = None
+        self.strokeWeight = None
+        self.tracking = None
+        self.treatIdeographicSpaceAsSpace = None
+        self.tsume = None
+        self.underline = None
+        self.underlineGapOverprint = None
+        self.underlineGapTint = None
+        self.underlineOffset = None
+        self.underlineOverprint = None
+        self.underlineTint = None
+        self.underlineWeight = None
+        self.verticalScale = None
+        self.xOffsetDiacritic = None
+        self.yOffSetDiacritic = None
+
+        self.allGrepStyles = None
+        self.allLineStyles = None
+        self.allNestedStyles = None
+        self.appliedFont = None
+        self.appliedNumberingList = None
+        self.balanceRaggedLines = None
+        self.bulletChar = None
+        self.bulletsCharacterStyle = None
+        self.bulletsFont = None
+        self.bulletsFontStyle = None
+        self.customGlyph = None
+        self.leading = None
+        self.numberingCharacterStyle = None
+        self.numberingFormat = None
+        self.numberingRestartPolicies = None
+        self.openTypeFeatures = None
+        self.ruleAboveColor = None
+        self.ruleAboveGapColor = None
+        self.ruleAboveType = None
+        self.ruleBelowColor = None
+        self.ruleBelowGapColor = None
+        self.ruleBelowType = None
+        self.strikeThroughColor = None
+        self.strikeThroughGapColor = None
+        self.strikeThroughType = None
+        self.tabList = None
+        self.underlineColor = None
+        self.underlineGapColor = None
+        self.underlineType = None
+
+    def set_word_spacing(self, *, minimum=None, desired=None, maximum=None):
+        if minimum is not None:
+            self.minimumWordSpacing = minimum
+        if desired is not None:
+            self.desiredWordSpacing = desired
+        if maximum is not None:
+            self.maximumWordSpacing = maximum
+
+    def set_glyph_scaling(self, *, minimum=None, desired=None, maximum=None):
+        if minimum is not None:
+            self.minimumGlyphScaling = minimum
+        if desired is not None:
+            self.desiredGlyphScaling = desired
+        if maximum is not None:
+            self.maximumGlyphScaling = maximum
+
+    def set_letter_spacing(self, *, minimum=None, desired=None, maximum=None):
+        if minimum is not None:
+            self.minimumLetterSpacing = minimum
+        if desired is not None:
+            self.desiredLetterSpacing = desired
+        if maximum is not None:
+            self.maximumLetterSpacing = maximum
+
+    def set_justification(self, *, word=None, glyph=None, letter=None):
+        """Accepts up to 3 sets of tuples containing 3 values to set justification settings"""
+        if isinstance(word, tuple):
+            self.set_word_spacing(word[0], word[1], word[2])
+        if isinstance(glyph, tuple):
+            self.set_glyph_scaling(glyph[0], glyph[1], glyph[2])
+        if isinstance(letter, tuple):
+            self.set_letter_spacing(letter[0], letter[1], letter[2])
