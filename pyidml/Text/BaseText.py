@@ -1,3 +1,44 @@
+from weakref import WeakKeyDictionary
+
+
+class CTBoolean(object):
+    def __init__(self):
+        self._values = WeakKeyDictionary()
+
+    def __get__(self, instance, instance_type):
+        if instance is None:
+            return self
+        return self._values.get(instance, None)
+
+    def __set__(self, instance, value):
+        if value is not None:
+            if isinstance(value, bool):
+                self._values[instance] = value
+            else:
+                raise TypeError("Property must be a bool value or None.")
+        else:
+            self._values[instance] = None
+
+
+class CTString(object):
+    def __init__(self):
+        self._values = WeakKeyDictionary()
+
+    def __get__(self, instance, instance_type):
+        if instance is None:
+            return self
+        return self._values.get(instance, None)
+
+    def __set__(self, instance, value):
+        if value is not None:
+            if isinstance(value, str):
+                self._values[instance] = value
+            else:
+                raise TypeError("Property must be a string or None.")
+        else:
+            self._values[instance] = None
+
+
 class CommonText(object):
     def __init__(self):
         self.appliedCharacterStyle = None
@@ -6,7 +47,6 @@ class CommonText(object):
         self.appliedParagraphStyle = None
         self.autoLeading = None
         self.autoTcy = None
-        self.autoTcyIncludeRoman = None
         self.baselineShift = None
         self.bulletsAlignment = None
         self.bulletsAndNumberingListType = None
@@ -37,35 +77,24 @@ class CommonText(object):
         self.gradientStrokeAngle = None
         self.gradientStrokeLength = None
         self.gradientStrokeStart = None
-        self.gridAlignFirstLineOnly = None
         self.gridAlignment = None
         self.horizontalScale = None
         self.hyphenWeight = None
-        self.hyphenateAcrossColumns = None
         self.hyphenateAfterFirst = None
         self.hyphenateBeforeLast = None
-        self.hyphenateCapitalizedWords = None
         self.hyphenateLadderLimit = None
-        self.hyphenateLastWord = None
         self.hyphenateWordsLongerThan = None
-        self.hyphenation = None
         self.hyphenationZone = None
-        self.ignoreEdgeAlignment = None
         self.justification = None
-        self.keepAllLinesTogether = None
         self.keepFirstLines = None
         self.keepLastLines = None
-        self.keepLinesTogether = None
-        self.keepRuleAboveInFrame = None
         self.keepWithNext = None
-        self.keepWithPrevious = None
         self.kerningMethod = None
         self.kerningValue = None
         self.keyboardDirection = None
         self.lastLineIndent = None
         self.leadingModel = None
         self.leftIndent = None
-        self.ligatures = None
         self.maximumGlyphScaling = None
         self.maximumLetterSpacing = None
         self.maximumWordSpacing = None
@@ -73,64 +102,33 @@ class CommonText(object):
         self.minimumLetterSpacing = None
         self.minimumWordSpacing = None
         self.miterLimit = None
-        self.noBreak = None
         self.numberingAlignment = None
-        self.numberingRestartPolicy = None
-        self.numberingContinue = None
         self.numberingExpression = None
         self.numberingLevel = None
         self.numberingStartAt = None
-        self.otfContextualAlternative = None
-        self.otfDiscretionaryLigature = None
         self.otfFigureStyle = None
-        self.otfFraction = None
-        self.otfHVKana = None
-        self.otfHistorical = None
-        self.otfJustificationAlternate = None
-        self.otfLocale = None
-        self.otfMark = None
-        self.otfOrdinal = None
-        self.otfOverlapSwash = None
-        self.otfProportionalMetrics = None
-        self.otfRomanItalics = None
-        self.otfSlashedZero = None
-        self.otfStretchedAlternate = None
-        self.otfStylisticAlternate = None
         self.otfStylisticSets = None
-        self.otfSwash = None
-        self.otfTitling = None
-        self.overprintFill = None
-        self.overprintStroke = None
         self.pageNumberType = None
         self.paragraphDirection = None
         self.paragraphJustification = None
         self.pointSize = None
         self.position = None
         self.positionalForm = None
-        self.rensuuji = None
         self.rightIndent = None
-        self.rotateSingleByteCharacters = None
-        self.ruleAbove = None
-        self.ruleAboveGapOverprint = None
         self.ruleAboveGapTint = None
         self.ruleAboveLeftIndent = None
         self.ruleAboveLineWeight = None
         self.ruleAboveOffset = None
-        self.ruleAboveOverprint = None
         self.ruleAboveRightIndent = None
         self.ruleAboveTint = None
         self.ruleAboveWidth = None
-        self.ruleBelow = None
-        self.ruleBelowGapOverprint = None
         self.ruleBelowGapTint = None
         self.ruleBelowLeftIndent = None
         self.ruleBelowLineWeight = None
         self.ruleBelowOffset = None
-        self.ruleBelowOverprint = None
         self.ruleBelowRightIndent = None
         self.ruleBelowTint = None
         self.ruleBelowWidth = None
-        self.scaleAffectsLineHeight = None
         self.singleWordJustification = None
         self.skew = None
         self.spaceAfter = None
@@ -140,25 +138,18 @@ class CommonText(object):
         self.spanColumnType = None
         self.spanSplitColumnCount = None
         self.startParagraph = None
-        self.strikeThroughGapOverprint = None
         self.strikeThroughGapTint = None
         self.strikeThroughOffset = None
-        self.strikeThroughOverprint = None
         self.strikeThroughTint = None
         self.strikeThroughWeight = None
-        self.strikeThru = None
         self.strokeAlignment = None
         self.strokeColor = None
         self.strokeTint = None
         self.strokeWeight = None
         self.tracking = None
-        self.treatIdeographicSpaceAsSpace = None
         self.tsume = None
-        self.underline = None
-        self.underlineGapOverprint = None
         self.underlineGapTint = None
         self.underlineOffset = None
-        self.underlineOverprint = None
         self.underlineTint = None
         self.underlineWeight = None
         self.verticalScale = None
@@ -194,6 +185,59 @@ class CommonText(object):
         self.underlineColor = None
         self.underlineGapColor = None
         self.underlineType = None
+
+
+    # Boolean values
+    autoTcyIncludeRoman = CTBoolean()
+    gridAlignFirstLineOnly = CTBoolean()
+    hyphenateAcrossColumns = CTBoolean()
+    hyphenateCapitalizedWords = CTBoolean()
+    hyphenateLastWord = CTBoolean()
+    hyphenation = CTBoolean()
+    ignoreEdgeAlignment = CTBoolean()
+    keepAllLinesTogether = CTBoolean()
+    keepLinesTogether = CTBoolean()
+    keepRuleAboveInFrame = CTBoolean()
+    keepWithPrevious = CTBoolean()
+    ligatures = CTBoolean()
+    noBreak = CTBoolean()
+    numberingApplyRestartPolicy = CTBoolean()
+    numberingContinue = CTBoolean()
+    otfContextualAlternative = CTBoolean()
+    otfDiscretionaryLigature = CTBoolean()
+    otfFraction = CTBoolean()
+    otfHVKana = CTBoolean()
+    otfHistorical = CTBoolean()
+    otfJustificationAlternate = CTBoolean()
+    otfLocale = CTBoolean()
+    otfMark = CTBoolean()
+    otfOrdinal = CTBoolean()
+    otfOverlapSwash = CTBoolean()
+    otfProportionalMetrics = CTBoolean()
+    otfRomanItalics = CTBoolean()
+    otfSlashedZero = CTBoolean()
+    otfStretchedAlternate = CTBoolean()
+    otfStylisticAlternate = CTBoolean()
+    otfSwash = CTBoolean()
+    otfTitling = CTBoolean()
+    overprintFill = CTBoolean()
+    overprintStroke = CTBoolean()
+    rensuuji = CTBoolean()
+    rotateSingleByteCharacters = CTBoolean()
+    ruleAbove = CTBoolean()
+    ruleAboveGapOverprint = CTBoolean()
+    ruleAboveOverprint = CTBoolean()
+    ruleBelow = CTBoolean()
+    ruleBelowGapOverprint = CTBoolean()
+    ruleBelowOverprint = CTBoolean()
+    scaleAffectsLineHeight = CTBoolean()
+    strikeThroughGapOverprint = CTBoolean()
+    strikeThroughOverprint = CTBoolean()
+    strikeThru = CTBoolean()
+    treatIdeographicSpaceAsSpace = CTBoolean()
+    underline = CTBoolean()
+    underlineGapOverprint = CTBoolean()
+    underlineOverprint = CTBoolean()
 
     def set_word_spacing(self, *, minimum=None, desired=None, maximum=None):
         if minimum is not None:

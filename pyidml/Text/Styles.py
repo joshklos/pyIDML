@@ -1,13 +1,18 @@
-class ParagraphStyle(object):
+from .BaseText import CommonText
+
+
+class ParagraphStyle(CommonText):
     """Right now a basic holder for information about a paragraph style, to be fleshed out"""
     def __init__(self, name):
+        super().__init__()
         self.name = name
         self.id = 0
 
 
-class CharacterStyle(object):
+class CharacterStyle(CommonText):
     """Right now a basic holder for information about a character style, to be fleshed out"""
     def __init__(self, name):
+        super().__init__()
         self.name = name
         self.id = 0
 
