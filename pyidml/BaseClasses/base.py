@@ -2,6 +2,7 @@ import os as os
 from pyidml.Text.Story import Stories
 from pyidml.Text.Styles import TextStyles
 from lxml import etree
+import zipfile
 
 
 class pyIDML(object):
@@ -45,11 +46,19 @@ class pyIDML(object):
             extension = file_or_string[-4:].lower()
             if extension == "idml":
                 self._inputType = "IDML"
+                self.filePath = file_or_string
             elif extension == "icml":
                 self._inputType = "ICML"
+                self.filePath = file_or_string
             else:
                 self._inputType = "STRING"
 
     def parse(self):
-        print("Parsing " + self.filePath)
+        if self._inputType == "IDML":
+            self.parse_idml(self.filePath)
         pass
+
+    def parse_idml(self, file_name):
+        with zipfile.ZipFile(file_name, 'r') as idml_file:
+            with idml_file.open('designmap.xml') as design_map:
+                print(design_map.read())
