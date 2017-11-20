@@ -1,42 +1,4 @@
-from weakref import WeakKeyDictionary
-
-
-class CTBoolean(object):
-    def __init__(self):
-        self._values = WeakKeyDictionary()
-
-    def __get__(self, instance, instance_type):
-        if instance is None:
-            return self
-        return self._values.get(instance, None)
-
-    def __set__(self, instance, value):
-        if value is not None:
-            if isinstance(value, bool):
-                self._values[instance] = value
-            else:
-                raise TypeError("Property must be a bool value or None.")
-        else:
-            self._values[instance] = None
-
-
-class CTString(object):
-    def __init__(self):
-        self._values = WeakKeyDictionary()
-
-    def __get__(self, instance, instance_type):
-        if instance is None:
-            return self
-        return self._values.get(instance, None)
-
-    def __set__(self, instance, value):
-        if value is not None:
-            if isinstance(value, str):
-                self._values[instance] = value
-            else:
-                raise TypeError("Property must be a string or None.")
-        else:
-            self._values[instance] = None
+from .BaseProperties import CTBoolean, CTString
 
 
 class CommonText(object):
@@ -271,3 +233,9 @@ class CommonText(object):
             self.set_glyph_scaling(glyph[0], glyph[1], glyph[2])
         if isinstance(letter, tuple):
             self.set_letter_spacing(letter[0], letter[1], letter[2])
+
+    def properties_from_tag(self, tag):
+        for item in dir(self):
+            if item.find('_') != -1:
+                continue
+            print(item[0].capitalize() + item[1:])

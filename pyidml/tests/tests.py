@@ -44,3 +44,7 @@ class TestCommonText(unittest.TestCase):
     def test_unset_boolean_is_none(self):
         test_text = CommonText()
         self.assertEqual(test_text.hyphenation, None)
+
+    def test_setting_values(self):
+        test_text = CommonText()
+        test_text.properties_from_tag("yo")
